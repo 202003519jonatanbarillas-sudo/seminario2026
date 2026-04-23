@@ -1,0 +1,1628 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>cbdc</title>
+
+
+  <style>
+  
+	html, body {
+	  margin: 0;
+	  padding: 0;
+	  height: 100%;
+	  overflow-y: hidden; /* permite scroll */
+	}
+	
+	/* Ocultar scrollbar en Chrome, Safari y Edge */
+	html::-webkit-scrollbar {
+	  display: none;
+	}
+
+	/* Ocultar scrollbar en Firefox */
+	html {
+	  scrollbar-width: none;
+	}
+	/* Ocultar scrollbar en IE y versiones antiguas de Edge */
+	body {
+	  -ms-overflow-style: none;
+	}
+
+	.temas-carousel-wrapper {
+	  max-width: 1200px;
+	  margin: auto;              /* centra horizontalmente */
+	  overflow: hidden;
+	  position: relative;
+	  flex: 1;                   /* ocupa el espacio central */
+	  display: flex;
+	  justify-content: center;   /* centra los cuadros */
+	  align-items: center;       /* centra verticalmente */
+	}
+
+	.temas-carousel {
+	  display: flex;
+	  overflow-x: auto;
+	  scroll-behavior: smooth;
+	  gap: 30px;
+	  padding: 20px;
+	  width: 90%;
+	  margin: 0 auto;
+	}
+
+
+	.tema-box:hover {
+	  transform: scale(1.05);
+	  filter: brightness(1);
+	}
+	
+	.tema-box p {
+	  font-size: 20px;
+	}
+	
+	.carousel-btn {
+	  position: absolute;
+	  top: 50%;
+	  transform: translateY(-50%);
+	  background: rgba(58,142,219,0.8);
+	  color: white;
+	  border: none;
+	  border-radius: 50%;
+	  padding: 10px 15px;
+	  cursor: pointer;
+	  z-index: 10;
+	}
+
+	.carousel-btn.left { left: 10px; }
+	.carousel-btn.right { right: 10px; }
+
+
+
+	/* Cada sección ocupa toda la pantalla en formato 16:9 */
+	.section {
+	  position: relative;
+	  width: 100vw;
+	  height: 100vh;
+	  aspect-ratio: 16 / 9;
+	  display: flex;
+	  flex-direction: column;
+	  justify-content: center; /* centra verticalmente */
+	  align-items: center;     /* centra horizontalmente */
+	  font-family: "Times New Roman", serif;
+	  font-weight: bold;
+	  color: grey;
+	  overflow: hidden;
+	}
+
+		/* Encabezado institucional */
+	.header-institucional {
+	  position: absolute;
+	  top: 0;   /* ahora sí funciona */
+	  left: 0;
+	  width: 100%;
+	  height: 80px;
+	  background: white;
+	  display: flex;
+	  align-items: center;
+	  justify-content: center;
+	  gap: 20px;
+    }
+	
+	.header-institucional img {
+	  height: 85px;   /* altura fija */
+	  width: auto;     /* el ancho se ajusta proporcionalmente */
+	}
+
+    .header-institucional h11 {
+      font-size: 35px;
+      font-weight: bold;
+       color: #000033;
+      margin: 0;
+    }
+
+    /* Contenido central */
+    .contenido {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0px;
+    }
+    .contenido .item {
+      text-align: center;
+      padding: 20px;
+      border-radius: 15px;
+      background: linear-gradient(135deg, #3a8edb, #5bb0f0);
+      color: white;
+      width: 220px;
+      transition: transform 0.3s ease;
+    }
+    .contenido .item:hover {
+      transform: scale(1.05);
+    }
+
+    /* Pie institucional adaptado a toda la parte inferior */
+    .footer-institucional {
+	  position: absolute;
+	  bottom: 0;   /* ahora sí funciona */
+	  left: 0;
+	  width: 100%;
+	  height: 100px;
+	  background: orange;
+	  display: flex;
+	  align-items: center;
+	  justify-content: center;
+	  gap: 20px;
+		}
+		.footer-institucional img {
+	  height: 85px;   /* altura fija */
+	  width: auto;     /* el ancho se ajusta proporcionalmente */
+	  margin-top: 10px;  /* empuja hacia abajo */
+	  margin-bottom: 10px; /* empuja hacia arriba */
+	}
+
+    .footer-institucional span {
+      font-size: 30px;
+      font-weight: bold;
+       color: #000033;
+    }
+
+
+	.temas-carousel {
+	  display: flex;
+	  overflow-x: auto;
+	  scroll-behavior: smooth;
+	  gap: 30px;
+	  padding: 20px;
+	  width: 90%;
+	  margin: 0 auto;
+	}
+	.temas-carousel::-webkit-scrollbar { display: none; }
+
+	.tema-box {
+	  flex: 0 0 auto;
+	  width: clamp(200px, 25vw, 290px);
+	  aspect-ratio: 4 / 3; /* 🔥 esto hace la magia */
+	  background: radial-gradient(circle at center, blue, blue);
+	  color: white;
+	  padding: 25px;
+	  border-radius: 20px;
+	  text-align: center;
+	  cursor: pointer;
+
+	  transition: transform 0.3s ease, filter 0.3s ease;
+	}}
+	.tema-box:hover {
+	  transform: scale(1.05);
+	  filter: brightness(1.2);
+	}
+
+	h1 {
+	  font-size: 6vw;   /* escala con ancho de pantalla */
+	  color: white;
+	  text-align: center;
+	  margin: 20px 0;
+	  top: 50%;
+	}
+
+
+	/* Subtítulos */
+	h2 {
+	  font-size: 2.5vw;
+	  color: white;
+	  text-align: center;
+	  margin: 15px 0;
+	}
+
+	/* Títulos grandes centrados */
+	h3, h4 {
+	  font-size: 5vw;
+	  color: white;
+	  text-align: center;
+	  margin: 20px 0;
+	  line-height: 1;
+	}
+	
+	h5 {
+	  font-size: 6vw;   /* escala con ancho de pantalla */
+	  color: blue;
+	  text-align: left;
+	  margin: 20px 0;
+	}
+
+	/* T脥TULO SUPERIOR */
+	.titulo-superior {
+	  position: absolute;
+	  top: 25%;
+	  left: 10%;
+
+	  font-family: "Times New Roman", serif;
+	  font-weight: bold;
+
+	  font-size: 75px;
+	  color: white;
+
+	  max-width: 75%;      /* 馃憟 tambi茅n se ajusta en varias l铆neas */
+	  line-height: 1.1;
+	  text-align: left;
+
+	  letter-spacing: 1.5px;
+	  opacity: 1;
+
+	  text-wrap: balance;
+
+	  z-index: 2;
+	}
+
+
+	/* T脥TULO INFERIOR */
+	.titulo-inferior {
+	  position: absolute;
+	  bottom: 25%;
+	  left: 10%;
+
+	  font-family: "Times New Roman", serif;
+	  font-weight: bold;
+
+	  font-size: 45px;
+	  color: white;
+
+	  max-width: 160%;      /* 馃憟 auto salto de l铆nea */
+	  line-height: 1.1;
+
+	  text-shadow: 0 0 15px rgba(0,0,0,0.7);
+
+	  letter-spacing: 1px;
+	  word-spacing: 3px;
+	  text-align: left;
+
+	  text-wrap: balance;
+
+	  z-index: 2;
+	}
+	
+	.titulo-inferior1 {
+	  position: absolute;
+	  bottom: 19%;
+	  left: 10%;
+
+	  font-family: "Times New Roman", serif;
+	  font-weight: bold;
+
+	  font-size: 45px;
+	  color: white;
+
+	  max-width: 100%;      /* 馃憟 auto salto de l铆nea */
+	  line-height: 1.1;
+
+	  text-shadow: 0 0 15px rgba(0,0,0,0.7);
+
+	  letter-spacing: 1px;
+	  word-spacing: 3px;
+	  text-align: left;
+
+	  text-wrap: balance;
+
+	  z-index: 2;
+	}
+	
+	
+	.titulo-seccion {
+	  font-size: 65px;
+	  font-weight: bold;
+	  color: blue;
+	  margin: 0;
+	  top: 10%;
+	}
+	
+	.titulo-seccion-izquierda {
+	  display: flex;
+	  flex-direction: row;
+	  justify-content: center;
+	  align-items: center;
+	  width: 100%;
+	  gap: 25px;
+	  padding: 0 40px;
+	  box-sizing: border-box;
+	}
+
+	.titulo-seccion-izquierda h5 {
+	  font-size: 3vw;
+	  color: blue;
+	  flex: 1;
+	  max-width: 25%;
+	  text-align: center;
+	  margin: 0;
+	}
+
+	.titulo-seccion-izquierda img {
+	  flex: 3;
+	  max-width: 75%;
+	  height: auto;
+	  border-radius: 10px;
+	}
+
+	.titulo-seccion-izquierda .img-especial {
+	  flex: 3;
+	  max-width: 60%;
+	  height: auto;
+	  border-radius: 10px;
+	}
+
+	.titulo-seccion-izquierda .img-especial2 {
+	  flex: 3;
+	  max-width: 52.5%;
+	  height: auto;
+	  border-radius: 10px;
+	}
+
+	.titulo-seccion-izquierda .img-especial3 {
+	  flex: 3;
+	  max-width: 40%;
+	  height: auto;
+	  border-radius: 10px;
+	}
+
+	.titulo-seccion-izquierda .img-especial4 {
+	  flex: 3;
+	  max-width: 55%;
+	  height: auto;
+	  border-radius: 10px;
+	}
+
+	.titulo-seccion-izquierda .img-especial5 {
+	  flex: 3;
+	  max-width: 35%;
+	  height: auto;
+	  border-radius: 10px;
+	}
+
+	.titulo-seccion-izquierda .img-especial6 {
+	  flex: 3;
+	  max-width: 50%;
+	  height: auto;
+	  border-radius: 10px;
+	}
+
+	.titulo-seccion-izquierda .img-especial7 {
+	  flex: 3;
+	  max-width: 70%;
+	  height: auto;
+	  border-radius: 10px;
+	}
+
+	.titulo-seccion-izquierda .img-especial8 {
+	  flex: 3;
+	  max-width: 75%;
+	  height: auto;
+	  border-radius: 10px;
+	}
+	
+	.titulo-seccion-izquierda .img-especial9 {
+	  flex: 3;
+	  max-width: 65%;
+	  height: auto;
+	  border-radius: 10px;
+	}
+	
+	.titulo-seccion-izquierda .img-especial10 {
+	  flex: 3;
+	  max-width: 37.5%;
+	  height: auto;
+	  border-radius: 10px;
+	}
+
+	.titulo-seccion-izquierda .img-especial11 {
+	  flex: 3;
+	  max-width: 65%;
+	  height: auto;
+	  border-radius: 10px;
+	}
+
+	.titulo-seccion-derecha {
+	  display: flex;
+	  gap: 25px;
+	  flex-direction: row-reverse; /* 🔥 clave */
+	  justify-content: center;
+	  align-items: center;
+	  width: 100%;
+	  padding: 0 40px;
+	  box-sizing: border-box;
+	}
+
+	.titulo-seccion-derecha h6 {
+	  font-size: 3vw;
+	  color: blue;
+	  flex: 1;
+	  max-width: 25%;
+	  text-align: center;
+	  margin: 0;
+	}
+
+	.titulo-seccion-derecha img {
+	  flex: 3;
+	  max-width: 75%;
+	  height: auto;
+	  border-radius: 10px;
+	}
+
+	.titulo-seccion-derecha .img-especial {
+	  flex: 3;
+	  max-width: 52.5%;
+	  height: auto;
+	  border-radius: 10px;
+	}
+
+	.titulo-seccion-derecha .img-especial1 {
+	  flex: 3;
+	  max-width: 65%;
+	  height: auto;
+	  border-radius: 10px;
+	}
+
+	.titulo-seccion-derecha .img-especial2 {
+	  flex: 3;
+	  max-width: 47.5%;
+	  height: auto;
+	  border-radius: 10px;
+	}
+
+	.titulo-seccion-derecha .img-especial3 {
+	  flex: 3;
+	  max-width: 65%;
+	  height: auto;
+	  border-radius: 10px;
+	}
+
+	.titulo-seccion-derecha .img-especial4 {
+	  flex: 3;
+	  max-width: 40%;
+	  height: auto;
+	  border-radius: 10px;
+	}
+
+	.titulo-seccion-derecha .img-especial5 {
+	  flex: 3;
+	  max-width: 70%;
+	  height: auto;
+	  border-radius: 10px;
+	}
+	
+	.titulo-seccion-derecha .img-especial6 {
+	  flex: 3;
+	  max-width: 42.5%;
+	  height: auto;
+	  border-radius: 10px;
+	}
+	
+    img {
+      width: 50%;
+      margin-top: 20px;
+      border-radius: 10px;
+    }
+
+	.s1 {
+	  background: url("https://raw.githubusercontent.com/202003519jonatanbarillas-sudo/CBDCpresen/main/imagenes/Blockchain.png") no-repeat center center;
+	  background-size: cover;
+	  position: relative;
+	}
+	.s1::before {
+	  content: "";
+	  position: absolute;
+	  inset: 0;
+
+	  background: linear-gradient(
+		to right,
+		rgba(0,0,0,0.8),
+		rgba(0,0,0,0.3)
+	  );
+
+	  z-index: 1;
+	}
+		
+    .s2 { background: white; }
+    .s3 { background: #555; }
+	.s4 { background: white; 
+		  position: relative;
+		  }
+	.s5 { background: white; }
+	
+	.section.s5 {
+	  display: flex;
+	  flex-direction: column;
+	  height: 100vh;
+	  position: relative;
+	}
+
+	.section.s5 .content-center {
+	  flex: 1;
+	  display: flex;
+	  flex-direction: column;
+	  justify-content: flex-start; /* centra vertical real */
+	  align-items: center;
+	  gap: 0;/* separa título y carrusel */
+	  padding-top: 175px;   /* compensa header */
+	  padding-bottom: 100px; /* compensa footer */
+	  box-sizing: border-box;
+	}
+
+	#fullscreenBtn {
+	  position: absolute;
+	  top: 10px;
+	  right: 10px;
+	  padding: 12px 20px;
+
+	  /* Color: un azul entre normal y celeste */
+	  background: blue;   /* puedes probar también #3498db o #4aa3df */
+	  color: white;
+
+	  /* Bordes redondeados */
+	  border: none;
+	  border-radius: 25px;   /* ?? más redondeado */
+
+	  /* Texto */
+	  font-weight: bold;     /* negrita */
+	  font-size: 16px;       /* tama?o de letra */
+
+	  cursor: pointer;
+	  z-index: 99999999999999;
+
+	  /* Efecto al pasar el mouse */
+	  transition: background 0.3s ease;
+	}
+	#fullscreenBtn:hover {
+	  background: #5bb0f0;   /* tono más claro al pasar el mouse */
+	}
+
+#btnTemas {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+
+  width: 50px;
+  height: 50px;
+
+  background: #3a8edb;
+  color: white;
+
+  border: none;
+  border-radius: 50%; /* 🔥 lo hace circular */
+  background: rgba(58, 142, 219, 0.8);
+  backdrop-filter: blur(5px);
+  font-size: 22px;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+
+  z-index: 9999;
+
+  transition: transform 0.2s ease, background 0.3s ease;
+}
+
+#btnTemas:hover {
+  transform: scale(1.1);
+  background: #5bb0f0;
+}
+
+#btnAlerta {
+  position: absolute;
+  top: 10px;
+  left: 10px;   /* 👈 lado contrario al fullscreenBtn */
+
+  padding: 12px 20px;
+
+  /* Mismo color y estilo que fullscreenBtn */
+  background: blue;   /* puedes usar también #3498db o #4aa3df */
+  color: white;
+
+  border: none;
+  border-radius: 25px;   /* bordes redondeados */
+  
+  font-weight: bold;
+  font-size: 16px;
+
+  cursor: pointer;
+  z-index: 99999999999999;
+
+  transition: background 0.3s ease;
+}
+
+#btnAlerta:hover {
+  background: #5bb0f0;   /* mismo hover */
+}
+
+/* =========================
+   📱 MODO CELULAR
+========================= */
+@media (max-width: 768px) {
+
+  /* 🔥 PERMITE SCROLL REAL EN MÓVIL */
+  html, body {
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* 🔥 SECCIONES FLEXIBLES */
+  .section {
+    height: auto !important;
+    min-height: 100vh;
+    padding: 90px 15px 80px 15px;
+    aspect-ratio: auto;
+  }
+
+  /* 🔥 HEADER MÁS PEQUEÑO */
+  .header-institucional {
+    height: 60px;
+    padding: 5px;
+  }
+
+  .header-institucional img {
+    height: 40px;
+  }
+
+  .header-institucional h11 {
+    font-size: 14px;
+    text-align: center;
+  }
+
+  /* 🔥 FOOTER MÁS PEQUEÑO */
+  .footer-institucional {
+    height: 70px;
+  }
+
+  .footer-institucional img {
+    height: 40px;
+  }
+
+  .footer-institucional span {
+    font-size: 14px;
+    text-align: center;
+  }
+
+  /* 🔥 TEXTOS RESPONSIVOS */
+  h1 {
+    font-size: clamp(22px, 6vw, 36px);
+  }
+
+  h2 {
+    font-size: clamp(16px, 4vw, 22px);
+  }
+
+  h3, h4 {
+    font-size: clamp(20px, 5vw, 30px);
+  }
+
+  h5 {
+    font-size: clamp(18px, 5vw, 26px);
+    text-align: center;
+  }
+
+  /* 🔥 TÍTULOS GRANDES */
+  .titulo-superior {
+    font-size: clamp(24px, 6vw, 38px);
+    left: 5%;
+    top: 30%;
+    max-width: 90%;
+  }
+
+  .titulo-inferior,
+  .titulo-inferior1 {
+    font-size: clamp(16px, 4vw, 26px);
+    left: 5%;
+    max-width: 90%;
+  }
+
+  .titulo-seccion {
+    font-size: clamp(22px, 6vw, 34px);
+  }
+
+  /* 🔥 CAMBIAR A VERTICAL */
+  .titulo-seccion-izquierda,
+  .titulo-seccion-derecha {
+    flex-direction: column !important;
+    padding: 0 10px;
+    gap: 15px;
+  }
+
+  .titulo-seccion-izquierda h5,
+  .titulo-seccion-derecha h6 {
+    max-width: 100%;
+    font-size: 18px;
+    text-align: center;
+  }
+
+  .titulo-seccion-izquierda img,
+  .titulo-seccion-derecha img {
+    max-width: 100%;
+  }
+
+  /* 🔥 IMÁGENES FULL WIDTH */
+  img {
+    width: 100%;
+  }
+
+  /* 🔥 CARRUSEL TOUCH */
+  .carousel-btn {
+    display: none;
+  }
+
+  .temas-carousel {
+    scroll-snap-type: x mandatory;
+    gap: 15px;
+  }
+
+  .tema-box {
+    width: 80%;
+    padding: 15px;
+    scroll-snap-align: center;
+  }
+
+  .tema-box p {
+    font-size: 14px;
+  }
+
+  /* 🔥 BOTONES MÁS GRANDES */
+  #btnTemas {
+    width: 60px;
+    height: 60px;
+    font-size: 24px;
+  }
+
+  #fullscreenBtn,
+  #btnAlerta {
+    padding: 14px;
+    font-size: 14px;
+  }
+
+  /* 🔥 AJUSTE SECCIÓN TEMAS */
+  .section.s5 .content-center {
+    padding-top: 120px;
+    padding-bottom: 80px;
+  }
+
+}
+	
+  </style>
+</head>
+
+
+<body>
+
+<button id="fullscreenBtn">Pantalla completa</button>
+<button id="btnTemas" onclick="goToSection('temas')">🏠</button>
+<button id="btnAlerta">Alerta</button>
+<div id="fullpage"></div>
+  
+	<div class="section s1">
+
+	  <h1 class="titulo-superior">
+		ANÁLISIS DE LAS IMPLICACIONES DEL BLOCKCHAIN EN LA POLÍTICA ECONÓMICA CONTEMPORÁNEA
+	  </h1>
+
+	</div>
+
+<div class="section s5" id="temas">
+  <!-- Encabezado institucional -->
+  <div class="header-institucional">
+    <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/usac.png" alt="Logo Universidad">
+    <h11>UNIVERSIDAD DE SAN CARLOS DE GUATEMALA</h11>
+  </div>
+
+  <!-- Contenido central -->
+  <div class="content-center">
+    <h1 class="titulo-seccion">TEMAS</h1>
+
+    <!-- Contenedor del carrusel con botones -->
+    <div class="temas-carousel-wrapper">
+      <button class="carousel-btn left" onclick="scrollCarousel(-1)">&#10094;</button>
+      <div class="temas-carousel" id="temasCarousel">
+        <div class="tema-box" onclick="goToSection('capitulo1')">
+          <h2>CAPÍTULO I</h2>
+          <p>Fundamentos Monetarios, del Trueque a la Era Digital</p>
+          <span class="link">APRENDE MÁS</span>
+        </div>
+        <div class="tema-box" onclick="goToSection('capitulo2')">
+          <h2>CAPÍTULO II</h2>
+          <p>Del Banco Central al Dinero Digital, una Transición Inevitable</p>
+          <span class="link">APRENDE MÁS</span>
+        </div>
+        <div class="tema-box" onclick="goToSection('capitulo3')">
+          <h2>CAPÍTULO III</h2>
+          <p>Innovación, Transparencia y Control Fiscal</p>
+          <span class="link">APRENDE MÁS</span>
+        </div>
+        <div class="tema-box" onclick="goToSection('capitulo4')">
+          <h2>CAPÍTULO IV</h2>
+          <p>CBDC y Pagos Digitales, la Nueva Arquitectura de los Intercambios</p>
+          <span class="link">APRENDE MÁS</span>
+        </div>
+        <div class="tema-box" onclick="goToSection('capitulo5')">
+          <h2>CAPÍTULO V</h2>
+          <p>Blockchain como Herramienta Tecnológica Contra el Lavado de Dinero</p>
+          <span class="link">APRENDE MÁS</span>
+        </div>
+        <div class="tema-box" onclick="goToSection('capitulo6')">
+          <h2>CAPÍTULO VI</h2>
+          <p>Propuesta de Infraestructura Blockchain para la Modernización del Sistema Económico Guatemalteco</p>
+          <span class="link">APRENDE MÁS</span>
+        </div>
+      </div>
+      <button class="carousel-btn right" onclick="scrollCarousel(1)">&#10095;</button>
+    </div>
+  </div>
+
+  <!-- Pie institucional -->
+  <div class="footer-institucional">
+    <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/econ.png">
+    <span>ESCUELA DE ECONOMÍA – SEMINARIO 2026</span>
+  </div>
+</div>
+
+
+
+	  <div class="section s3" id="capitulo1">
+		<h3>CAPÍTULO I </h3>
+		<h4>Fundamentos del Blockchain y las CBDC</h4>
+	  </div>
+
+<!---------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+	  
+	  <div class="section s4">
+	    <div class="header-institucional">
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/usac.png">
+		  <h11>UNIVERSIDAD DE SAN CARLOS DE GUATEMALA</h11>
+		</div>
+		
+		<div class="titulo-seccion-izquierda">
+		  <h5>Estructura Blockchain</h5>
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/cap1-n1.png">
+		</div>
+		
+		<div class="footer-institucional">
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/econ.png">
+		  <span>ESCUELA DE ECONOMÍA – SEMINARIO 2026</span>
+		</div>	  
+	  
+	  </div>
+	  
+<!---------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+	  
+	  <div class="section s4">
+	    <div class="header-institucional">
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/usac.png">
+		  <h11>UNIVERSIDAD DE SAN CARLOS DE GUATEMALA</h11>
+		</div>
+		
+		<div class="titulo-seccion-derecha">
+		  <h6>Tipos de Blockchain</h6>
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/cap1-n2.png">
+		</div>
+		
+		<div class="footer-institucional">
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/econ.png">
+		  <span>ESCUELA DE ECONOMÍA – SEMINARIO 2026</span>
+		</div>	  
+	  
+	  </div>
+	  
+	  
+<!---------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+	  
+	  <div class="section s4">
+	    <div class="header-institucional">
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/usac.png">
+		  <h11>UNIVERSIDAD DE SAN CARLOS DE GUATEMALA</h11>
+		</div>
+		
+		<div class="titulo-seccion-izquierda">
+		  <h5>Beneficios de los Smart Contracts</h5>
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/cap1-n3.png" class="img-especial">
+		</div>
+		
+		<div class="footer-institucional">
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/econ.png">
+		  <span>ESCUELA DE ECONOMÍA – SEMINARIO 2026</span>
+		</div>	  
+	  
+	  </div>
+	  
+	  
+<!---------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+	  
+	  <div class="section s4">
+	    <div class="header-institucional">
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/usac.png">
+		  <h11>UNIVERSIDAD DE SAN CARLOS DE GUATEMALA</h11>
+		</div>
+		
+		<div class="titulo-seccion-derecha">
+		  <h6>CBDC Remuneradas</h6>
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/cap1-n4.png" class="img-especial">
+		</div>
+		
+		<div class="footer-institucional">
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/econ.png">
+		  <span>ESCUELA DE ECONOMÍA – SEMINARIO 2026</span>
+		</div>	  
+	  
+	  </div>
+	  
+<!---------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+	  
+	  <div class="section s4">
+	    <div class="header-institucional">
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/usac.png">
+		  <h11>UNIVERSIDAD DE SAN CARLOS DE GUATEMALA</h11>
+		</div>
+		
+		<div class="titulo-seccion-izquierda">
+		  <h5>CBDC No Remuneradas</h5>
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/cap1-n5.png" class="img-especial2">
+		</div>
+		
+		<div class="footer-institucional">
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/econ.png">
+		  <span>ESCUELA DE ECONOMÍA – SEMINARIO 2026</span>
+		</div>	  
+	  
+	  </div>
+	  
+<!---------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+
+
+	  <div class="section s3" id="capitulo2">
+		<h3>CAPÍTULO II </h3>
+		<h4>Del Banco Central al Dinero Digital, una Transición Inevitable</h4>
+	  </div>
+	  
+	  
+	  
+<!---------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+	  
+	  <div class="section s4">
+	    <div class="header-institucional">
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/usac.png">
+		  <h11>UNIVERSIDAD DE SAN CARLOS DE GUATEMALA</h11>
+		</div>
+		
+		<div class="titulo-seccion-izquierda">
+		  <h5>Política Monetaria en la Era Digital, Blockchain y CBDC</h5>
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/cap2-n1.png" class="img-especial3">
+		</div>
+		
+		<div class="footer-institucional">
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/econ.png">
+		  <span>ESCUELA DE ECONOMÍA – SEMINARIO 2026</span>
+		</div>	  
+	  
+	  </div>
+	  
+	  
+<!---------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+	  
+	  <div class="section s4">
+	    <div class="header-institucional">
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/usac.png">
+		  <h11>UNIVERSIDAD DE SAN CARLOS DE GUATEMALA</h11>
+		</div>
+		
+		<div class="titulo-seccion-derecha">
+		  <h6>Efectos de Introducir un CBDC en la Curva IS</h6>
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/cap2-n2.png" class="img-especial1">
+		</div>
+		
+		<div class="footer-institucional">
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/econ.png">
+		  <span>ESCUELA DE ECONOMÍA – SEMINARIO 2026</span>
+		</div>	  
+	  
+	  </div>
+	  
+	  
+<!---------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+	  
+	  <div class="section s4">
+	    <div class="header-institucional">
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/usac.png">
+		  <h11>UNIVERSIDAD DE SAN CARLOS DE GUATEMALA</h11>
+		</div>
+		
+		<div class="titulo-seccion-izquierda">
+		  <h5>Efectos de las CBDC en la curva LM</h5>
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/cap2-n3.png" class="img-especial4">
+		</div>
+		
+		<div class="footer-institucional">
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/econ.png">
+		  <span>ESCUELA DE ECONOMÍA – SEMINARIO 2026</span>
+		</div>	  
+	  
+	  </div>
+	  
+	  
+<!---------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+	  
+	  <div class="section s4">
+	    <div class="header-institucional">
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/usac.png">
+		  <h11>UNIVERSIDAD DE SAN CARLOS DE GUATEMALA</h11>
+		</div>
+		
+		<div class="titulo-seccion-derecha">
+		  <h6>Implicaciones de las CBDC en la Política Monetaria</h6>
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/cap2-n4.png">
+		</div>
+		
+		<div class="footer-institucional">
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/econ.png">
+		  <span>ESCUELA DE ECONOMÍA – SEMINARIO 2026</span>
+		</div>	  
+	  
+	  </div>
+	  
+	  
+<!---------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+	  
+	  <div class="section s4">
+	    <div class="header-institucional">
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/usac.png">
+		  <h11>UNIVERSIDAD DE SAN CARLOS DE GUATEMALA</h11>
+		</div>
+		
+		<div class="titulo-seccion-izquierda">
+		  <h5>e-CNY: Sistema Híbrido Chino</h5>
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/cap2-n5.png" class="img-especial5">
+		</div>
+		
+		<div class="footer-institucional">
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/econ.png">
+		  <span>ESCUELA DE ECONOMÍA – SEMINARIO 2026</span>
+		</div>	  
+	  
+	  </div>
+	  
+	  
+<!---------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+	  
+	  <div class="section s4">
+	    <div class="header-institucional">
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/usac.png">
+		  <h11>UNIVERSIDAD DE SAN CARLOS DE GUATEMALA</h11>
+		</div>
+		
+		<div class="titulo-seccion-derecha">
+		  <h6>Sand Dollar Inclusión Financiera en Bahamas</h6>
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/cap2-n6.png" class="img-especial2">
+		</div>
+		
+		<div class="footer-institucional">
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/econ.png">
+		  <span>ESCUELA DE ECONOMÍA – SEMINARIO 2026</span>
+		</div>	  
+	  
+	  </div>
+	  
+  
+<!---------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+	  
+	  <div class="section s4">
+	    <div class="header-institucional">
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/usac.png">
+		  <h11>UNIVERSIDAD DE SAN CARLOS DE GUATEMALA</h11>
+		</div>
+		
+		<div class="titulo-seccion-izquierda">
+		  <h5>El e-Naira, la CBDC de Nigeria</h5>
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/cap2-n7.png" class="img-especial6">
+		</div>
+		
+		<div class="footer-institucional">
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/econ.png">
+		  <span>ESCUELA DE ECONOMÍA – SEMINARIO 2026</span>
+		</div>	  
+	  
+	  </div>
+	  
+	  
+<!---------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+	  
+	  <div class="section s4">
+	    <div class="header-institucional">
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/usac.png">
+		  <h11>UNIVERSIDAD DE SAN CARLOS DE GUATEMALA</h11>
+		</div>
+		
+		<div class="titulo-seccion-derecha">
+		  <h6>Estudios Posteriores</h6>
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/cap2-n8.png">
+		</div>
+		
+		<div class="footer-institucional">
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/econ.png">
+		  <span>ESCUELA DE ECONOMÍA – SEMINARIO 2026</span>
+		</div>	  
+	  
+	  </div>
+	  
+	  
+<!---------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+
+<!---------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+	  
+	  <div class="section s3" id="capitulo3">
+		<h3>CAPÍTULO III </h3>
+		<h4>Innovación, Transparencia y Control Fiscal</h4>		
+	  </div>
+	  
+
+<!---------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+	  
+	  <div class="section s4">
+	    <div class="header-institucional">
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/usac.png">
+		  <h11>UNIVERSIDAD DE SAN CARLOS DE GUATEMALA</h11>
+		</div>
+		
+		<div class="titulo-seccion-izquierda">
+		  <h5>Limitaciones Institucionales de la Política Fiscal</h5>
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/cap3-n1.png">
+		</div>
+		
+		<div class="footer-institucional">
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/econ.png">
+		  <span>ESCUELA DE ECONOMÍA – SEMINARIO 2026</span>
+		</div>	  
+	  
+	  </div>
+	  
+  
+	  
+<!---------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+
+<!---------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+	  
+	  <div class="section s4">
+	    <div class="header-institucional">
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/usac.png">
+		  <h11>UNIVERSIDAD DE SAN CARLOS DE GUATEMALA</h11>
+		</div>
+		
+		<div class="titulo-seccion-derecha">
+		  <h6>Áreas clave de Blockchain en el sector público</h6>
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/cap3-n3.png">
+		</div>
+		
+		<div class="footer-institucional">
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/econ.png">
+		  <span>ESCUELA DE ECONOMÍA – SEMINARIO 2026</span>
+		</div>	  
+	  
+	  </div>
+	  
+  
+	  
+<!---------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+	  
+	  <div class="section s4">
+	    <div class="header-institucional">
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/usac.png">
+		  <h11>UNIVERSIDAD DE SAN CARLOS DE GUATEMALA</h11>
+		</div>
+		
+		<div class="titulo-seccion-izquierda">
+		  <h5>Canales de transmisión</h5>
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/cap3-n4.png">
+		</div>
+		
+		<div class="footer-institucional">
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/econ.png">
+		  <span>ESCUELA DE ECONOMÍA – SEMINARIO 2026</span>
+		</div>	  
+	  
+	  </div>
+	  
+
+<!---------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+	  
+	  <div class="section s4">
+	    <div class="header-institucional">
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/usac.png">
+		  <h11>UNIVERSIDAD DE SAN CARLOS DE GUATEMALA</h11>
+		</div>
+		
+		<div class="titulo-seccion-derecha">
+		  <h6>Parámetros de Calidad Institucional</h6>
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/cap3-n5.png">
+		</div>
+		
+		<div class="footer-institucional">
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/econ.png">
+		  <span>ESCUELA DE ECONOMÍA – SEMINARIO 2026</span>
+		</div>	  
+	  
+	  </div>
+	  
+  
+	  
+<!---------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+	
+
+<!---------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+	  
+	  <div class="section s4">
+	    <div class="header-institucional">
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/usac.png">
+		  <h11>UNIVERSIDAD DE SAN CARLOS DE GUATEMALA</h11>
+		</div>
+		
+		<div class="titulo-seccion-izquierda">
+		  <h5>Automatización de los impuestos en EE.UU</h5>
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/cap3-n9.png">
+		</div>
+		
+		<div class="footer-institucional">
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/econ.png">
+		  <span>ESCUELA DE ECONOMÍA – SEMINARIO 2026</span>
+		</div>	  
+	  
+	  </div>
+	  
+  
+	  
+<!---------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+
+	  
+<!---------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+	  
+	  <div class="section s4">
+	    <div class="header-institucional">
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/usac.png">
+		  <h11>UNIVERSIDAD DE SAN CARLOS DE GUATEMALA</h11>
+		</div>
+		
+		<div class="titulo-seccion-derecha">
+		  <h6>Tecnología Blockchain en México, Chile y Perú</h6>
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/cap3-n12.png">
+		</div>
+		
+		<div class="footer-institucional">
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/econ.png">
+		  <span>ESCUELA DE ECONOMÍA – SEMINARIO 2026</span>
+		</div>	  
+	  
+	  </div>
+	  
+	  
+	  
+<!---------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+	  
+
+	  	  	  
+<!---------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+	  
+	  <div class="section s3" id="capitulo4">
+		<h3>CAPÍTULO IV</h3>
+		<h4>CBDC y Pagos Digitales, la Nueva Arquitectura de los Intercambios</h4>
+	  </div>
+ 	  
+<!---------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+	  
+	  
+	  
+	  
+	  <div class="section s4">
+	    <div class="header-institucional">
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/usac.png">
+		  <h11>UNIVERSIDAD DE SAN CARLOS DE GUATEMALA</h11>
+		</div>
+		
+		<div class="titulo-seccion-izquierda">
+		  <h5>Medios de Pago Electrónicos en la Economía Digital</h5>
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/cap4-n1.png" class="img-especial8">
+		</div>
+		
+		<div class="footer-institucional">
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/econ.png">
+		  <span>ESCUELA DE ECONOMÍA – SEMINARIO 2026</span>
+		</div>	  
+	  
+	  </div>
+	  
+  
+	  
+<!---------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+	  
+	  <div class="section s4">
+	    <div class="header-institucional">
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/usac.png">
+		  <h11>UNIVERSIDAD DE SAN CARLOS DE GUATEMALA</h11>
+		</div>
+		
+		<div class="titulo-seccion-derecha">
+		  <h6>Enfoques Teóricos del Dinero</h6>
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/cap4-n2.png">
+		</div>
+		
+		<div class="footer-institucional">
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/econ.png">
+		  <span>ESCUELA DE ECONOMÍA – SEMINARIO 2026</span>
+		</div>	  
+	  
+	  </div>
+	  
+
+<!---------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+	  
+	  <div class="section s4">
+	    <div class="header-institucional">
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/usac.png">
+		  <h11>UNIVERSIDAD DE SAN CARLOS DE GUATEMALA</h11>
+		</div>
+		
+		<div class="titulo-seccion-izquierda">
+		  <h5>Instrumentos de Pago e Infraestructuras en los Sistemas de Pago Digitales</h5>
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/cap4-n3.png">
+		</div>
+		
+		<div class="footer-institucional">
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/econ.png">
+		  <span>ESCUELA DE ECONOMÍA – SEMINARIO 2026</span>
+		</div>	  
+	  
+	  </div>
+	  
+  
+	  
+<!---------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+	  
+	  <div class="section s4">
+	    <div class="header-institucional">
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/usac.png">
+		  <h11>UNIVERSIDAD DE SAN CARLOS DE GUATEMALA</h11>
+		</div>
+		
+		<div class="titulo-seccion-derecha">
+		  <h6>Diferencias CBDC Minorista y CBDC Mayorista</h6>
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/cap4-n4.png"class="img-especial4">
+		</div>
+		
+		<div class="footer-institucional">
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/econ.png">
+		  <span>ESCUELA DE ECONOMÍA – SEMINARIO 2026</span>
+		</div>	  
+	  
+	  </div>
+	  
+
+<!---------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+	  
+	  <div class="section s4">
+	    <div class="header-institucional">
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/usac.png">
+		  <h11>UNIVERSIDAD DE SAN CARLOS DE GUATEMALA</h11>
+		</div>
+		
+		<div class="titulo-seccion-izquierda">
+		  <h5>Los Medios de Pago en un Contexto de Blockchain</h5>
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/cap4-n5.png" >
+		</div>
+		
+		<div class="footer-institucional">
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/econ.png">
+		  <span>ESCUELA DE ECONOMÍA – SEMINARIO 2026</span>
+		</div>	  
+	  
+	  </div>
+	  
+	  
+<!---------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+	  
+
+	  <div class="section s3" id="capitulo5">
+		<h3>CAPÍTULO V </h3>
+		<h4>Blockchain como Herramienta Tecnológica Contra el Lavado de Dinero</h4>
+	  </div>
+ 
+<!---------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+	  
+	  <div class="section s4">
+	    <div class="header-institucional">
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/usac.png">
+		  <h11>UNIVERSIDAD DE SAN CARLOS DE GUATEMALA</h11>
+		</div>
+		
+		<div class="titulo-seccion-izquierda">
+		  <h5>Trazabilidad en Blockchain como Herramienta Contra el Lavado de Dinero</h5>
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/cap5-n1.png" class="img-especial9">
+		</div>
+		
+		<div class="footer-institucional">
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/econ.png">
+		  <span>ESCUELA DE ECONOMÍA – SEMINARIO 2026</span>
+		</div>	  
+	  
+	  </div>
+	  
+	  
+<!---------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+	  
+	  <div class="section s4">
+	    <div class="header-institucional">
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/usac.png">
+		  <h11>UNIVERSIDAD DE SAN CARLOS DE GUATEMALA</h11>
+		</div>
+		
+		<div class="titulo-seccion-derecha">
+		  <h6>Efectos de las CBDC de Bancos Centrales en la Inclusión Financiera y la Economía Real</h6>
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/cap5-n2.png" class="img-especial5">
+		</div>
+		
+		<div class="footer-institucional">
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/econ.png">
+		  <span>ESCUELA DE ECONOMÍA – SEMINARIO 2026</span>
+		</div>	  
+	  
+	  </div>
+	  
+<!---------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+
+	  <div class="section s3" id="capitulo6">
+		<h3>CAPÍTULO VI</h3>
+		<h4>Propuesta de Infraestructura Blockchain para la Modernización del Sistema Económico Guatemalteco</h4>
+	  </div>
+ 
+<!---------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+
+	  <div class="section s4">
+	    <div class="header-institucional">
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/usac.png">
+		  <h11>UNIVERSIDAD DE SAN CARLOS DE GUATEMALA</h11>
+		</div>
+		
+		<div class="titulo-seccion-izquierda">
+		  <h5>Propuesta para Guatemala, Primeros Pasos</h5>
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/cap6-n1.png" class="img-especial10">
+		</div>
+		
+		<div class="footer-institucional">
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/econ.png">
+		  <span>ESCUELA DE ECONOMÍA – SEMINARIO 2026</span>
+		</div>	  
+	  
+	  </div>
+	  
+<!---------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+
+	  <div class="section s4">
+	    <div class="header-institucional">
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/usac.png">
+		  <h11>UNIVERSIDAD DE SAN CARLOS DE GUATEMALA</h11>
+		</div>
+		
+		<div class="titulo-seccion-derecha">
+		  <h6>Integración Total</h6>
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/cap6-n2.png" class="img-especial6">
+		</div>
+		
+		<div class="footer-institucional">
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/econ.png">
+		  <span>ESCUELA DE ECONOMÍA – SEMINARIO 2026</span>
+		</div>	  
+	  
+	  </div>
+	  
+<!---------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+	  
+	  <div class="section s4">
+	    <div class="header-institucional">
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/usac.png">
+		  <h11>UNIVERSIDAD DE SAN CARLOS DE GUATEMALA</h11>
+		</div>
+		
+		<div class="titulo-seccion-izquierda">
+		  <h5>QOROGT</h5>
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/cap6-n3.png" class="img-especial11">
+		</div>
+		
+		<div class="footer-institucional">
+		  <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/econ.png">
+		  <span>ESCUELA DE ECONOMÍA – SEMINARIO 2026</span>
+		</div>	  
+	  
+	  </div>
+
+
+
+
+
+
+</div>
+
+<script>
+
+let currentSection = 0; // 🔥 FALTABA ESTO
+
+function scrollCarousel(direction) {
+  const carousel = document.getElementById("temasCarousel");
+  const box = carousel.querySelector(".tema-box");
+  const boxWidth = box.offsetWidth + 30;
+  const scrollAmount = boxWidth * 3;
+
+  carousel.scrollBy({ left: direction * scrollAmount, behavior: "smooth" });
+}
+
+function goToSection(id) {
+  const sections = document.querySelectorAll(".section");
+
+  sections.forEach((sec, index) => {
+    if (sec.id === id) {
+      currentSection = index; // 🔥 ahora sí funciona
+      sec.scrollIntoView({ behavior: "smooth" });
+    }
+  });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const sections = document.querySelectorAll(".section");
+
+  function scrollToSection(target) {
+    sections[target].scrollIntoView({ behavior: "smooth" });
+  }
+
+  function nextSection() {
+    if (currentSection < sections.length - 1) {
+      currentSection++;
+      scrollToSection(currentSection);
+    }
+  }
+
+  function prevSection() {
+    if (currentSection > 0) {
+      currentSection--;
+      scrollToSection(currentSection);
+    }
+  }
+
+  window.addEventListener("wheel", (e) => {
+    if (e.deltaY > 0) nextSection();
+    else prevSection();
+  });
+
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowDown") nextSection();
+    if (e.key === "ArrowUp") prevSection();
+  });
+
+  const btn = document.getElementById("fullscreenBtn");
+  btn.addEventListener("click", () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen();
+    } else {
+      document.exitFullscreen();
+    }
+  });
+  
+function beep() {
+  // Crear contexto de audio en cada clic
+  const ctx = new (window.AudioContext || window.webkitAudioContext)();
+  const oscillator = ctx.createOscillator();
+  oscillator.type = "square";   // onda cuadrada
+  oscillator.frequency.value = 1; // 1000 Hz = beep agudo
+  
+  oscillator.connect(ctx.destination);
+  oscillator.start();
+  oscillator.stop(ctx.currentTime + 0.2); // dura 0.2 segundos
+}// Botón alerta
+  const btnAlerta = document.getElementById("btnAlerta");
+  btnAlerta.addEventListener("click", () => {
+    beep(); // 👈 dispara el beep
+  });
+  
+});
+</script>
+</body>
+</html>

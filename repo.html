@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Recursos del Seminario</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      margin: 20px;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .recurso {
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 30px;
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+    }
+    iframe {
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    .acciones {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: center;
+    }
+    button {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 4px;
+      background: #0078d7;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #005fa3;
+    }
+  </style>
+</head>
+<body>
+  <h1>Recursos del Seminario</h1>
+
+  <!-- Recurso 1 -->
+  <div class="recurso">
+    <iframe src="pagina1.html" width="400" height="300"></iframe>
+    <div class="acciones">
+      <a href="pagina1.html" download><button>Descargar HTML</button></a>
+      <div id="qr-html1"></div>
+    </div>
+  </div>
+
+  <!-- Recurso 2 -->
+  <div class="recurso">
+    <iframe src="pagina2.html" width="400" height="300"></iframe>
+    <div class="acciones">
+      <a href="pagina2.html" download><button>Descargar HTML</button></a>
+      <div id="qr-html2"></div>
+    </div>
+  </div>
+
+  <!-- Recurso 3 -->
+  <div class="recurso">
+    <iframe src="doc1.pdf" width="400" height="300"></iframe>
+    <div class="acciones">
+      <a href="doc1.pdf" download><button>Descargar PDF</button></a>
+      <div id="qr-doc1"></div>
+    </div>
+  </div>
+
+  <!-- Recurso 4 -->
+  <div class="recurso">
+    <iframe src="doc2.pdf" width="400" height="300"></iframe>
+    <div class="acciones">
+      <a href="doc2.pdf" download><button>Descargar PDF</button></a>
+      <div id="qr-doc2"></div>
+    </div>
+  </div>
+
+  <!-- Librería QR -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script>
+    // Generar QR para cada recurso
+    new QRCode(document.getElementById("qr-html1"), "https://tu-sitio.com/pagina1.html");
+    new QRCode(document.getElementById("qr-html2"), "https://tu-sitio.com/pagina2.html");
+    new QRCode(document.getElementById("qr-doc1"), "https://tu-sitio.com/doc1.pdf");
+    new QRCode(document.getElementById("qr-doc2"), "https://tu-sitio.com/doc2.pdf");
+  </script>
+</body>
+</html>

@@ -49,38 +49,38 @@
 <body>
   <h1>Recursos del Seminario</h1>
 
-  <!-- Recurso 1 -->
+  <!-- Recurso 1: HTML Blockchain -->
   <div class="recurso">
-    <iframe src="pagina1.html" width="400" height="300"></iframe>
+    <iframe src="presentacion_blockchain.html" width="400" height="300"></iframe>
     <div class="acciones">
-      <a href="pagina1.html" download><button>Descargar HTML</button></a>
+      <a href="presentacion_blockchain.html" download><button>Descargar HTML</button></a>
       <div id="qr-html1"></div>
     </div>
   </div>
 
-  <!-- Recurso 2 -->
+  <!-- Recurso 2: HTML Perspectivas -->
   <div class="recurso">
-    <iframe src="pagina2.html" width="400" height="300"></iframe>
+    <iframe src="presentacion_perspectivas.html" width="400" height="300"></iframe>
     <div class="acciones">
-      <a href="pagina2.html" download><button>Descargar HTML</button></a>
+      <a href="presentacion_perspectivas.html" download><button>Descargar HTML</button></a>
       <div id="qr-html2"></div>
     </div>
   </div>
 
-  <!-- Recurso 3 -->
+  <!-- Recurso 3: PDF Blockchain -->
   <div class="recurso">
-    <iframe src="doc1.pdf" width="400" height="300"></iframe>
+    <iframe src="analisis_blockchain.pdf" width="400" height="300"></iframe>
     <div class="acciones">
-      <a href="doc1.pdf" download><button>Descargar PDF</button></a>
+      <a href="analisis_blockchain.pdf" download><button>Descargar PDF</button></a>
       <div id="qr-doc1"></div>
     </div>
   </div>
 
-  <!-- Recurso 4 -->
+  <!-- Recurso 4: PDF Perspectivas -->
   <div class="recurso">
-    <iframe src="doc2.pdf" width="400" height="300"></iframe>
+    <iframe src="perspectivas.pdf" width="400" height="300"></iframe>
     <div class="acciones">
-      <a href="doc2.pdf" download><button>Descargar PDF</button></a>
+      <a href="perspectivas.pdf" download><button>Descargar PDF</button></a>
       <div id="qr-doc2"></div>
     </div>
   </div>
@@ -88,11 +88,11 @@
   <!-- Librería QR -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <script>
-    // Generar QR para cada recurso
-    new QRCode(document.getElementById("qr-html1"), "https://tu-sitio.com/pagina1.html");
-    new QRCode(document.getElementById("qr-html2"), "https://tu-sitio.com/pagina2.html");
-    new QRCode(document.getElementById("qr-doc1"), "https://tu-sitio.com/doc1.pdf");
-    new QRCode(document.getElementById("qr-doc2"), "https://tu-sitio.com/doc2.pdf");
+    // Generar QR con URLs públicas de GitHub Pages
+    new QRCode(document.getElementById("qr-html1"), "https://202003519jonatanbarillas-sudo.github.io/seminario2026/presentacion_blockchain.html");
+    new QRCode(document.getElementById("qr-html2"), "https://202003519jonatanbarillas-sudo.github.io/seminario2026/presentacion_perspectivas.html");
+    new QRCode(document.getElementById("qr-doc1"), "https://202003519jonatanbarillas-sudo.github.io/seminario2026/analisis_blockchain.pdf");
+    new QRCode(document.getElementById("qr-doc2"), "https://202003519jonatanbarillas-sudo.github.io/seminario2026/perspectivas.pdf");
   </script>
 </body>
 </html>

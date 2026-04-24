@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Recursos del Seminario</title>
   <style>
     body {
@@ -268,6 +269,165 @@
 	  text-align: left; /* o center si prefieres */
 	}
 
+/* 📱 SOLO CELULAR */
+@media (max-width: 1000px) {
+
+  body {
+    overflow: auto; /* permitir scroll normal */
+  }
+
+  .scroll-area {
+    position: relative;
+    top: 0;
+    left: 0;
+    transform: none;
+    width: 100%;
+    height: auto;
+    border-radius: 0;
+    padding: 0px;
+	
+  }
+  .content{
+	  height: auto;   
+	  padding-top: 0px;	  
+	  overflow-y: auto;   /* scroll si se pasa */
+	}
+
+	.topbar {
+	  background: orange;
+	  color: #0b1a4a;
+	  display: flex;
+	  align-items: center;
+	  padding: 0;
+	  position: relative;             /* 🔹 necesario para centrar el medio */
+	  width: 100%;
+	  z-index: 2000;
+	}
+
+	.left-area {
+	  display: flex;
+	  align-items: left;
+	  gap: 0px;
+	}
+	.left-area img.logo {
+	 height: auto;
+	 width: 100px;
+	 margin-left: 190px;		 
+	}
+
+
+	.center-area {
+	  position: absolute;             /* 🔹 truco para centrar */
+	  left: 50%;
+	  display: flex;
+	  align-items: center;
+	  gap: 0px;
+	}
+
+	.center-area h1 {
+	  font-size: 15px;
+	  width: 60%;
+	  margin: 0;
+
+	}
+
+	.right-area {
+	  display: flex;
+	  text-align: center;
+	  justify-content: left-end;
+	}
+
+	.right-area h1 {
+	  width: 40%;
+	  font-size: 15px;
+	  margin: 0;
+	}
+
+	.center-area img.logo {
+	 height: auto;
+	 width: 35px;
+	  margin-right: 0px;
+	}
+
+
+  /* 🔹 CAMBIO CLAVE: vertical */
+  .recurso {
+    flex-direction: column;
+    gap: 25px;
+	align-items: center; /* 🔥 centra horizontal */
+	
+  }
+
+  .recurso .preview {
+    width: 92%;
+    height: 95vh;
+	min-height: 300px;
+	max-height: 600px;
+    padding: 5px;
+	
+  }
+
+  .recurso .lateral {
+    width: 92%;
+    height: auto;
+  }
+
+  .recurso .lateral .cuadro {
+    width: 92%;
+    height: auto;
+    padding: 15px;
+  }
+
+  iframe {
+    border-radius: 10px;
+	width: 100%;
+    height: 100vh;
+	min-height: 300px;
+	max-height: 600px;
+  }
+
+  button {
+    font-size: 25px;
+    width: 100%;
+  }
+  	/* 🔹 QR (canvas o imagen) */
+	#qr-html1 canvas, #qr-html2 canvas,
+	#qr-doc1 canvas, #qr-doc2 canvas,
+	#qr-html1 img, #qr-html2 img,
+	#qr-doc1 img, #qr-doc2 img {
+
+	  width: 95%;        /* 🔥 tamaño principal */
+	  max-width: 1000px;  /* límite en celulares grandes */
+	  max-height: 1000px;
+      /* mantiene proporción */
+	}
+
+  .titulo-seccion {
+    font-size: 30px;
+  }
+
+  .titulo-doc {
+    font-size: 18px;
+    text-align: center;
+  }
+
+  .sidebar {
+    width: 100%;      /* 🔥 ancho tipo app */
+    max-width: 300px; /* límite para que no crezca demasiado */
+    left: -100%;     /* oculto completamente */
+  }
+
+  .sidebar.active {
+    left: 0;
+  }
+
+}
+
+  .content.shifted {
+    margin-left: 20;
+  }
+
+}
 
   </style>
 </head>

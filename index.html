@@ -5,94 +5,428 @@
   <title>Recursos del Seminario</title>
   <style>
     body {
+      margin: 0;
       font-family: Arial, sans-serif;
       background: #f4f4f4;
-      margin: 20px;
+	  overflow: hidden;
     }
-    h1 {
-      text-align: center;
-      margin-bottom: 30px;
+.scroll-area {
+  position: fixed;    
+  top: 150px;          /* espacio para la topbar */
+  left: 50%;
+  transform: translateX(-50%); /* centrado horizontal */
+  width: 95%;
+  height: calc(100vh - 140px); /* ocupa casi toda la altura */
+  overflow-y: auto;    /* 🔹 scroll solo aquí */
+  background: #0b1a4a;
+  border-radius: 25px;
+  padding: 0px;
+  color: white;
+}
+
+
+.scroll-area::-webkit-scrollbar {
+  width: 10px;
+}
+.scroll-area::-webkit-scrollbar-track {
+  background: black;
+}
+.scroll-area::-webkit-scrollbar-thumb {
+  background: #ffd700;
+  border-radius: 5px;
+}
+.scroll-area::-webkit-scrollbar-thumb:hover {
+  background: orange;
+}
+
+	
+	.topbar {
+	  background: orange;
+	  color: #0b1a4a;
+	  display: flex;
+	  align-items: center;
+	  justify-content: space-between; /* distribuye izquierda y centro */
+	  padding: 10px 20px;
+	  position: fixed;
+	  top: 0;
+	  left: 0;
+	  width: 100%;
+	  z-index: 2000;
+	}
+
+	.left-area {
+	  display: flex;
+	  align-items: center;
+	}
+
+	.center-area {
+	  display: flex;
+	  align-items: center;
+	  justify-content: center;
+	  position: absolute;   /* 🔹 truco: posición absoluta */
+	  left: 50%;            /* 🔹 mueve al centro */
+	  transform: translateX(-50%); /* 🔹 corrige el desplazamiento */
+	}
+
+	.topbar img.logo {
+	  height: 50px;
+	  margin-right: 15px;
+	}
+
+	.topbar h1 {
+	  font-size: 45px;
+	  font-weight: bold;
+	  margin: 0;
+	  color: #0b1a4a;
+	}
+
+
+
+
+
+    .menu-btn {
+      font-size: 24px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      color: white;
+      margin-right: 15px;
+      position: relative;
+      z-index: 3000;
     }
-    .recurso {
-      background: #fff;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      padding: 20px;
-      margin-bottom: 30px;
-      display: flex;
-      gap: 20px;
-      align-items: flex-start;
+
+    .logo {
+      height: 50px;
     }
+
+    /* Sidebar */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -250px; /* oculto inicialmente */
+      width: 250px;
+      height: 100%;
+      background: #333;
+      color: #333;
+      padding-top: 60px;
+      transition: left 0.3s ease;
+      z-index: 1500;
+    }
+
+    .sidebar.active {
+      left: 0;
+    }
+
+    .sidebar a {
+      display: block;
+	  margin-top: 20px;
+      padding: 25px 10px;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .sidebar a:hover {
+      background: #444;
+    }
+
+    /* Contenido principal */
+    .content {
+	  padding-top: 120px;
+	  min-height: 100vh; 
+      padding: 80px 20px 20px; /* 🔹 espacio para que no tape la topbar */
+      transition: margin-left 0.3s ease;
+	  background: #0b1a4a;
+      margin-left: 0;
+    }
+	
+	
+	.content h1{
+	top: 50%;
+	}
+	
+    .content.shifted {
+      margin-left: 250px; /* 🔹 se corre a la derecha cuando sidebar está abierto */
+    }
+
+	.titulo-seccion {
+	  font-size: 37.5px;
+	  font-weight: bold;
+	  color: white;
+	  margin-bottom: 20px;
+	  text-align: center;
+	}
+
+	.recurso {
+	  display: flex;          /* fila principal */
+	  gap: 20px;
+	  margin-top: 25px;
+	  margin-bottom: 25px;
+	}
+
+	.recurso .preview {
+	  flex: 2;                /* cuadro grande a la izquierda */
+	  background: #fff;
+	  width: 1000px;   /* ancho fijo del cuadro grande */
+	  height: 500px;  /* alto fijo */
+	  border: 1px solid #ccc;
+	  border-radius: 15px;
+	  padding: 20px;
+	  margin-bottom: 25px;
+	}
+
+	.recurso .lateral {
+	  flex: 1;                /* columna derecha */
+	  display: flex;
+	  width: 250px;   /* ancho fijo del cuadro grande */
+	  height: 150px;  /* alto fijo */
+	  flex-direction: column; /* apila verticalmente */
+	  gap: 20px;
+	  border-radius: 25px;
+	}
+
+	.recurso .lateral .cuadro {
+	  background: #fff;
+	  width: 400px;
+	  height: 600px;
+	  border: 1px solid #ccc;
+	  border-radius: 25px;
+	  padding: 20px;
+	  text-align: center;
+	}
+
     iframe {
+	  width: 100%;    /* ocupa todo el ancho del cuadro */
+	  height: 100%;   /* ocupa todo el alto del cuadro */
       border: 1px solid #ddd;
-      border-radius: 4px;
+      border-radius: 25px;
     }
+
     .acciones {
       display: flex;
       flex-direction: column;
       gap: 10px;
       align-items: center;
     }
+
     button {
-      padding: 8px 16px;
+      font-size: 45px;
+      padding: 12px 24px;
       border: none;
-      border-radius: 4px;
-      background: #0078d7;
-      color: white;
+      border-radius: 25px;
+      background: orange;
+      color: #0b1a4a;
       cursor: pointer;
     }
+
     button:hover {
-      background: #005fa3;
+      background: #000080;
     }
+	#qr-html1, #qr-html2, #qr-doc1, #qr-doc2 {
+	  margin-top: 0px;
+	  display: flex;
+	  justify-content: center; /* centrado horizontal */
+	}
+
+	#qr-html1 canvas, #qr-html2 canvas,
+	#qr-doc1 canvas, #qr-doc2 canvas {
+	  border-radius: 25px; /* opcional: esquinas redondeadas */
+	}
+
+
   </style>
 </head>
 <body>
-  <h1>Recursos del Seminario</h1>
 
-  <!-- Recurso 1: HTML Blockchain -->
-  <div class="recurso">
-    <iframe src="presentacion_blockchain.html" width="400" height="300"></iframe>
-    <div class="acciones">
-      <a href="presentacion_blockchain.html" download><button>Descargar HTML</button></a>
-      <div id="qr-html1"></div>
-    </div>
+  <!-- Barra superior -->
+<div class="topbar">
+  <!-- Área izquierda -->
+  <div class="left-area">
+    <button class="menu-btn" onclick="toggleSidebar()">☰</button>
+    <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/logousac2.png" alt="Logo 1" class="logo">
   </div>
 
-  <!-- Recurso 2: HTML Perspectivas -->
-  <div class="recurso">
-    <iframe src="presentacion_perspectivas.html" width="400" height="300"></iframe>
-    <div class="acciones">
-      <a href="presentacion_perspectivas.html" download><button>Descargar HTML</button></a>
-      <div id="qr-html2"></div>
-    </div>
+  <!-- Área central -->
+  <div class="center-area">
+    <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/econ.png" alt="Logo 2" class="logo">
+    <h1>ESCUELA DE ECONOMÍA</h1>
+  </div>
+</div>
+
+
+
+  <!-- Panel lateral -->
+  <div class="sidebar" id="sidebar">
+    <a href="#" onclick="mostrar('blockchain')">Blockchain</a>
+    <a href="#" onclick="mostrar('perspectivas')">Perspectivas económicas</a>
+    <a href="#" onclick="mostrar('documentos')">Documento de investigación</a>
   </div>
 
-  <!-- Recurso 3: PDF Blockchain -->
-  <div class="recurso">
-    <iframe src="analisis_blockchain_Latex.pdf" width="400" height="300"></iframe>
-    <div class="acciones">
-      <a href="analisis_blockchain_Latex.pdf" download><button>Descargar PDF</button></a>
-      <div id="qr-doc1"></div>
-    </div>
+  <!-- Contenido -->
+<!-- Contenido -->
+<div class="content" id="contenido">
+  <h2 class="titulo-seccion">SEMINARIO 2026</h2>
+  <div class="scroll-area" id="scroll-area">
+    <!-- Aquí se insertan los recursos dinámicos -->
   </div>
+</div>
 
-  <!-- Recurso 4: PDF Perspectivas -->
-  <div class="recurso">
-    <iframe src="analisis_blockchain.pdf" width="400" height="300"></iframe>
-    <div class="acciones">
-      <a href="analisis_blockchain.pdf" download><button>Descargar PDF</button></a>
-      <div id="qr-doc2"></div>
-    </div>
-  </div>
+<!-- Librería QR -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
-  <!-- Librería QR -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-  <script>
-    // Generar QR con URLs públicas de GitHub Pages
-    new QRCode(document.getElementById("qr-html1"), "https://202003519jonatanbarillas-sudo.github.io/seminario2026/presentacion_blockchain.html");
-    new QRCode(document.getElementById("qr-html2"), "https://202003519jonatanbarillas-sudo.github.io/seminario2026/presentacion_perspectivas.html");
-    new QRCode(document.getElementById("qr-doc1"), "https://202003519jonatanbarillas-sudo.github.io/seminario2026/analisis_blockchain_Latex.pdf");
-    new QRCode(document.getElementById("qr-doc2"), "https://202003519jonatanbarillas-sudo.github.io/seminario2026/analisis_blockchain.pdf");
-  </script>
+<script>
+function toggleSidebar() {
+  const sidebar = document.getElementById("sidebar");
+  const content = document.getElementById("contenido");
+
+  sidebar.classList.toggle("active");
+  content.classList.toggle("shifted");
+}
+// 🔹 Bloquear flechas y redirigirlas al scroll-area
+document.addEventListener("keydown", function(e) {
+  const area = document.getElementById("scroll-area");
+  if (!area) return; // seguridad: si aún no existe, no hace nada
+
+  if (e.key === "ArrowDown") {
+    e.preventDefault();
+    area.scrollBy(0, 50);
+  }
+  if (e.key === "ArrowUp") {
+    e.preventDefault();
+    area.scrollBy(0, -50);
+  }
+})
+function mostrar(seccion) {
+  // siempre mantenemos el título fijo y el área de scroll
+  const cont = document.getElementById("contenido");
+  cont.innerHTML = `<h2 class="titulo-seccion">SEMINARIO 2026</h2>
+                    <div class="scroll-area" id="scroll-area"></div>`;
+
+  const area = document.getElementById("scroll-area"); // 🔹 aquí insertamos
+  
+	if (seccion === "blockchain") {
+	  area.innerHTML += `
+		<div class="recurso">
+		  <!-- Cuadro 1: Previsualización -->
+		  <div class="preview">
+			<iframe src="presentacion_blockchain.html" width="400" height="300"></iframe>
+		  </div>
+
+		  <!-- Columna lateral con cuadros 2 y 3 -->
+		  <div class="lateral">
+			<!-- Cuadro 2: Botón -->
+			<div class="cuadro">
+			  <a href="presentacion_blockchain.html" download>
+				<button>Descargar HTML</button>
+			  </a>
+			</div>
+
+			<!-- Cuadro 3: QR -->
+			<div class="cuadro">
+			  <div id="qr-html1"></div>
+			</div>
+		  </div>
+		</div>`;
+
+	  // 🔹 Generar QR con tamaño personalizado
+	  new QRCode(document.getElementById("qr-html1"), {
+		text: "https://202003519jonatanbarillas-sudo.github.io/seminario2026/presentacion_blockchain.html",
+		width: 365,   // ancho del QR
+		height: 365   // alto del QR
+	  });
+	}
+
+
+
+	if (seccion === "perspectivas") {
+	  area.innerHTML += `
+		<div class="recurso">
+		  <!-- Cuadro 1: Previsualización -->
+		  <div class="preview">
+			<iframe src="presentacion_perspectivas.html" width="400" height="300"></iframe>
+		  </div>
+
+		  <!-- Columna lateral con cuadros 2 y 3 -->
+		  <div class="lateral">
+			<!-- Cuadro 2: Botón -->
+			<div class="cuadro">
+			  <a href="presentacion_perspectivas.html" download>
+				<button>Descargar HTML</button>
+			  </a>
+			</div>
+
+			<!-- Cuadro 3: QR -->
+			<div class="cuadro">
+			  <div id="qr-html2"></div>
+			</div>
+		  </div>
+		</div>`;
+
+	  // 🔹 Generar QR con tamaño personalizado
+	  new QRCode(document.getElementById("qr-html2"), {
+		text: "https://202003519jonatanbarillas-sudo.github.io/seminario2026/presentacion_perspectivas.html",
+		width: 365,
+		height: 365
+	  });
+	}
+
+
+
+	if (seccion === "documentos") {
+	  area.innerHTML += `
+		<div class="recurso">
+		  <div class="preview">
+			<iframe src="analisis_blockchain_Latex.pdf" width="400" height="300"></iframe>
+		  </div>
+		  <div class="lateral">
+			<div class="cuadro">
+			  <a href="analisis_blockchain_Latex.pdf" download>
+				<button>Descargar PDF</button>
+			  </a>
+			</div>
+			<div class="cuadro">
+			  <div id="qr-doc1"></div>
+			</div>
+		  </div>
+		</div>
+
+		<div class="recurso">
+		  <div class="preview">
+			<iframe src="analisis_blockchain.pdf" width="400" height="300"></iframe>
+		  </div>
+		  <div class="lateral">
+			<div class="cuadro">
+			  <a href="analisis_blockchain.pdf" download>
+				<button>Descargar PDF</button>
+			  </a>
+			</div>
+			<div class="cuadro">
+			  <div id="qr-doc2"></div>
+			</div>
+		  </div>
+		</div>`;
+
+	  // 🔹 Generar QR con tamaño personalizado
+	  new QRCode(document.getElementById("qr-doc1"), {
+		text: "https://202003519jonatanbarillas-sudo.github.io/seminario2026/analisis_blockchain_Latex.pdf",
+		width: 365,
+		height: 365
+	  });
+	  new QRCode(document.getElementById("qr-doc2"), {
+		text: "https://202003519jonatanbarillas-sudo.github.io/seminario2026/analisis_blockchain.pdf",
+		width: 365,
+		height: 365
+	  });
+	}
+
+}
+
+// 🔹 Llamada inicial para que cargue Blockchain al abrir la página
+window.onload = function() {
+  mostrar("blockchain");
+};
+</script>
+
+
 </body>
 </html>

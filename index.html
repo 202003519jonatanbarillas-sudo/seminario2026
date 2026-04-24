@@ -10,34 +10,34 @@
       background: #f4f4f4;
 	  overflow: hidden;
     }
-.scroll-area {
-  position: fixed;    
-  top: 150px;          /* espacio para la topbar */
-  left: 50%;
-  transform: translateX(-50%); /* centrado horizontal */
-  width: 95%;
-  height: calc(100vh - 140px); /* ocupa casi toda la altura */
-  overflow-y: auto;    /* 🔹 scroll solo aquí */
-  background: #0b1a4a;
-  border-radius: 25px;
-  padding: 0px;
-  color: white;
-}
+	.scroll-area {
+	  position: fixed;    
+	  top: 65px;          /* espacio para la topbar */
+	  left:52%;
+	  transform: translateX(-50%); /* centrado horizontal */
+	  width: 100%;
+	  height: calc(111vh - 140px); /* ocupa casi toda la altura */
+	  overflow-y: auto;    /* 🔹 scroll solo aquí */
+	  background: #0b1a4a;
+	  border-radius: 5px;
+	  padding: 0 0 0px;
+	  color: white;
+	}
 
 
-.scroll-area::-webkit-scrollbar {
-  width: 10px;
-}
-.scroll-area::-webkit-scrollbar-track {
-  background: black;
-}
-.scroll-area::-webkit-scrollbar-thumb {
-  background: #ffd700;
-  border-radius: 5px;
-}
-.scroll-area::-webkit-scrollbar-thumb:hover {
-  background: orange;
-}
+	.scroll-area::-webkit-scrollbar {
+	  width: 10px;
+	}
+	.scroll-area::-webkit-scrollbar-track {
+	  background: black;
+	}
+	.scroll-area::-webkit-scrollbar-thumb {
+	  background: #ffd700;
+	  border-radius: 5px;
+	}
+	.scroll-area::-webkit-scrollbar-thumb:hover {
+	  background: orange;
+	}
 
 	
 	.topbar {
@@ -46,7 +46,7 @@
 	  display: flex;
 	  align-items: center;
 	  justify-content: space-between; /* distribuye izquierda y centro */
-	  padding: 10px 20px;
+	  padding: 0px 0px;
 	  position: fixed;
 	  top: 0;
 	  left: 0;
@@ -68,6 +68,22 @@
 	  transform: translateX(-50%); /* 🔹 corrige el desplazamiento */
 	}
 
+	.right-area {
+	  display: flex;
+	  align-items: center;
+	  justify-content: flex-end; /* 🔹 empuja el contenido a la derecha */
+	  flex: 1;                   /* 🔹 ocupa el espacio restante */
+	  margin-right: 30px;        /* 🔹 separa un poco del borde */
+	}
+
+	.right-area h1 {
+	  font-size: 32px;
+	  font-weight: bold;
+	  color: #0b1a4a;
+	  margin: 0;
+	}
+
+	
 	.topbar img.logo {
 	  height: 50px;
 	  margin-right: 15px;
@@ -79,7 +95,6 @@
 	  margin: 0;
 	  color: #0b1a4a;
 	}
-
 
 
 
@@ -164,6 +179,17 @@
 	  margin-bottom: 25px;
 	}
 
+	.titulo-doc {
+	  font-size: 28px;
+	  font-weight: bold;
+	  color: #0b1a4a;   /* azul institucional */
+	  margin-top: 30px;
+	  margin-bottom: 10px;
+	  text-align: left; /* o center si prefieres */
+	}
+
+
+
 	.recurso .preview {
 	  flex: 2;                /* cuadro grande a la izquierda */
 	  background: #fff;
@@ -174,6 +200,7 @@
 	  padding: 20px;
 	  margin-bottom: 25px;
 	}
+
 
 	.recurso .lateral {
 	  flex: 1;                /* columna derecha */
@@ -232,6 +259,14 @@
 	#qr-doc1 canvas, #qr-doc2 canvas {
 	  border-radius: 25px; /* opcional: esquinas redondeadas */
 	}
+	.titulo-doc {
+	  font-size: 28px;
+	  font-weight: bold;
+	  color: #ffd700;   /* dorado para resaltar */
+	  margin-top: 30px;
+	  margin-bottom: 10px;
+	  text-align: left; /* o center si prefieres */
+	}
 
 
   </style>
@@ -251,6 +286,10 @@
     <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/econ.png" alt="Logo 2" class="logo">
     <h1>ESCUELA DE ECONOMÍA</h1>
   </div>
+  
+  <div class="right-area">
+   <h1>SEMINARIO 2026</h1>
+  </div>
 </div>
 
 
@@ -265,7 +304,6 @@
   <!-- Contenido -->
 <!-- Contenido -->
 <div class="content" id="contenido">
-  <h2 class="titulo-seccion">SEMINARIO 2026</h2>
   <div class="scroll-area" id="scroll-area">
     <!-- Aquí se insertan los recursos dinámicos -->
   </div>
@@ -299,13 +337,13 @@ document.addEventListener("keydown", function(e) {
 function mostrar(seccion) {
   // siempre mantenemos el título fijo y el área de scroll
   const cont = document.getElementById("contenido");
-  cont.innerHTML = `<h2 class="titulo-seccion">SEMINARIO 2026</h2>
-                    <div class="scroll-area" id="scroll-area"></div>`;
+  cont.innerHTML = `<div class="scroll-area" id="scroll-area"></div>`;
 
   const area = document.getElementById("scroll-area"); // 🔹 aquí insertamos
   
 	if (seccion === "blockchain") {
 	  area.innerHTML += `
+		<h3 class="titulo-doc">Presentación de Blockchain</h3>
 		<div class="recurso">
 		  <!-- Cuadro 1: Previsualización -->
 		  <div class="preview">
@@ -340,6 +378,7 @@ function mostrar(seccion) {
 
 	if (seccion === "perspectivas") {
 	  area.innerHTML += `
+		<h3 class="titulo-doc">Presentación de Perspectivas Económicas</h3>
 		<div class="recurso">
 		  <!-- Cuadro 1: Previsualización -->
 		  <div class="preview">
@@ -374,6 +413,7 @@ function mostrar(seccion) {
 
 	if (seccion === "documentos") {
 	  area.innerHTML += `
+		<h3 class="titulo-doc">Análisis de las Implicaciones del Blockchain en la Políticia Económica Contemporánea (Latex)</h3>
 		<div class="recurso">
 		  <div class="preview">
 			<iframe src="analisis_blockchain_Latex.pdf" width="400" height="300"></iframe>
@@ -390,6 +430,8 @@ function mostrar(seccion) {
 		  </div>
 		</div>
 
+
+		<h3 class="titulo-doc">Análisis de las Implicaciones del Blockchain en la Políticia Económica Contemporánea</h3>
 		<div class="recurso">
 		  <div class="preview">
 			<iframe src="analisis_blockchain.pdf" width="400" height="300"></iframe>

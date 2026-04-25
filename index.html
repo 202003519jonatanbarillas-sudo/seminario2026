@@ -437,7 +437,6 @@
 <div class="topbar">
   <!-- Área izquierda -->
   <div class="left-area">
-    <button class="menu-btn" onclick="toggleSidebar()">☰</button>
     <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/logousac2.png" alt="Logo 1" class="logo">
   </div>
 
@@ -501,6 +500,8 @@ function mostrar(seccion) {
 
   const area = document.getElementById("scroll-area"); // 🔹 aquí insertamos
   
+
+
 	if (seccion === "blockchain") {
 	  area.innerHTML += `
 		<h3 class="titulo-doc">Presentación de Blockchain</h3>
@@ -524,20 +525,8 @@ function mostrar(seccion) {
 			  <div id="qr-html1"></div>
 			</div>
 		  </div>
-		</div>`;
-
-	  // 🔹 Generar QR con tamaño personalizado
-	  new QRCode(document.getElementById("qr-html1"), {
-		text: "https://202003519jonatanbarillas-sudo.github.io/seminario2026/presentacion_blockchain.html",
-		width: 365,   // ancho del QR
-		height: 365   // alto del QR
-	  });
-	}
-
-
-
-	if (seccion === "perspectivas") {
-	  area.innerHTML += `
+		</div>
+		
 		<h3 class="titulo-doc">Presentación de Perspectivas Económicas</h3>
 		<div class="recurso">
 		  <!-- Cuadro 1: Previsualización -->
@@ -559,20 +548,8 @@ function mostrar(seccion) {
 			  <div id="qr-html2"></div>
 			</div>
 		  </div>
-		</div>`;
-
-	  // 🔹 Generar QR con tamaño personalizado
-	  new QRCode(document.getElementById("qr-html2"), {
-		text: "https://202003519jonatanbarillas-sudo.github.io/seminario2026/presentacion_perspectivas.html",
-		width: 365,
-		height: 365
-	  });
-	}
-
-
-
-	if (seccion === "documentos") {
-	  area.innerHTML += `
+		</div>
+		
 		<h3 class="titulo-doc">Análisis de las Implicaciones del Blockchain en la Políticia Económica Contemporánea (Latex)</h3>
 		<div class="recurso">
 		  <div class="preview">
@@ -609,11 +586,25 @@ function mostrar(seccion) {
 		</div>`;
 
 	  // 🔹 Generar QR con tamaño personalizado
+	  new QRCode(document.getElementById("qr-html1"), {
+		text: "https://202003519jonatanbarillas-sudo.github.io/seminario2026/presentacion_blockchain.html",
+		width: 365,   // ancho del QR
+		height: 365   // alto del QR
+	  });
+
+	  new QRCode(document.getElementById("qr-html2"), {
+		text: "https://202003519jonatanbarillas-sudo.github.io/seminario2026/presentacion_perspectivas.html",
+		width: 365,
+		height: 365
+	  });
+	  
+	  // 🔹 Generar QR con tamaño personalizado
 	  new QRCode(document.getElementById("qr-doc1"), {
 		text: "https://202003519jonatanbarillas-sudo.github.io/seminario2026/analisis_blockchain_Latex.pdf",
 		width: 365,
 		height: 365
 	  });
+	  
 	  new QRCode(document.getElementById("qr-doc2"), {
 		text: "https://202003519jonatanbarillas-sudo.github.io/seminario2026/analisis_blockchain.pdf",
 		width: 365,

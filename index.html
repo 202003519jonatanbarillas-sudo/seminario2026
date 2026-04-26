@@ -102,15 +102,19 @@
 
     .menu-btn {
       font-size: 24px;
+	  border-radius: 0px;
       cursor: pointer;
-      background: none;
-      border: none;
+      background: #444;
+      border: 0;
       color: white;
-      margin-right: 15px;
+      margin-right: 0px;
       position: relative;
       z-index: 3000;
     }
 
+	.menu-btn:hover {
+      background: gray;
+	}
     .logo {
       height: 50px;
     }
@@ -122,7 +126,7 @@
       left: -250px; /* oculto inicialmente */
       width: 250px;
       height: 100%;
-      background: #333;
+      background: #444;
       color: #333;
       padding-top: 60px;
       transition: left 0.3s ease;
@@ -135,6 +139,7 @@
 
     .sidebar a {
       display: block;
+	  font-size: 25px;
 	  margin-top: 20px;
       padding: 25px 10px;
       color: white;
@@ -150,7 +155,7 @@
     .content {
 	  padding-top: 120px;
 	  min-height: 100vh; 
-      padding: 80px 20px 20px; /* 🔹 espacio para que no tape la topbar */
+      padding: 20px 20px 20px; /* 🔹 espacio para que no tape la topbar */
       transition: margin-left 0.3s ease;
 	  background: #0b1a4a;
       margin-left: 0;
@@ -158,7 +163,7 @@
 	
 	
 	.content h1{
-	top: 50%;
+	top: 75%;
 	}
 	
     .content.shifted {
@@ -173,55 +178,62 @@
 	  text-align: center;
 	}
 
+
+
 	.recurso {
 	  display: flex;          /* fila principal */
-	  gap: 20px;
-	  margin-top: 25px;
-	  margin-bottom: 25px;
+	  flex-direction: row;    /* 🔹 imagen a la izquierda, título a la derecha */
+	  gap: 25px;
+	  margin: 10px 0;
+	  align-items: flex-start;
 	}
-
-	.titulo-doc {
-	  font-size: 28px;
-	  font-weight: bold;
-	  color: #0b1a4a;   /* azul institucional */
-	  margin-top: 30px;
-	  margin-bottom: 10px;
-	  text-align: left; /* o center si prefieres */
-	}
-
-
 
 	.recurso .preview {
-	  flex: 2;                /* cuadro grande a la izquierda */
-	  background: #fff;
-	  width: 1000px;   /* ancho fijo del cuadro grande */
-	  height: 500px;  /* alto fijo */
+	margin-bottom: 25px;
+	  flex: 2;                /* ocupa más espacio */
+	  background: #ffd700;
+	  width: 700px;
+	  height: 625px;
 	  border: 1px solid #ccc;
-	  border-radius: 15px;
-	  padding: 20px;
-	  margin-bottom: 25px;
+	  border-radius: 25px;
+	  padding: 5px;
 	}
-
 
 	.recurso .lateral {
 	  flex: 1;                /* columna derecha */
 	  display: flex;
-	  width: 250px;   /* ancho fijo del cuadro grande */
-	  height: 150px;  /* alto fijo */
+	  flex-direction: column; /* apila título y botones */
+	  justify-content: flex-start;
+	  align-items: center;
+	  gap: 5px;
+	}
+
+	.recurso .lateral h3.titulo-doc {
+	  font-size: 50px; 
+	  margin-right: 50px;  /* 🔹 aquí cambias el tamaño */
+	  margin-bottom: 75px;
+	  font-weight: bold;
+	  width: 450px;
+	  color: #ffd700;
+	  text-align: center;
+	  flex: 1;                
+	  display: flex;
 	  flex-direction: column; /* apila verticalmente */
-	  gap: 20px;
-	  border-radius: 25px;
+	  gap: 0px;
+	  align-items: center;    /* centra horizontalmente */
 	}
 
 	.recurso .lateral .cuadro {
-	  background: #fff;
-	  width: 400px;
-	  height: 600px;
-	  border: 1px solid #ccc;
-	  border-radius: 25px;
-	  padding: 20px;
-	  text-align: center;
+	  flex: 1;                
+	  display: flex;
+	  margin-right: 50px;  /* 🔹 aquí cambias el tamaño */
+	  flex-direction: column; /* apila verticalmente */
+	  gap: 0px;
+	  align-items: center;    /* centra horizontalmente */
 	}
+
+
+
 
     iframe {
 	  width: 100%;    /* ocupa todo el ancho del cuadro */
@@ -248,7 +260,7 @@
     }
 
     button:hover {
-      background: #000080;
+      background: #FFCC80;
     }
 	#qr-html1, #qr-html2, #qr-doc1, #qr-doc2 {
 	  margin-top: 0px;
@@ -437,6 +449,7 @@
 <div class="topbar">
   <!-- Área izquierda -->
   <div class="left-area">
+    <button class="menu-btn" onclick="toggleSidebar()">☰</button>
     <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/logousac2.png" alt="Logo 1" class="logo">
   </div>
 
@@ -456,8 +469,8 @@
   <!-- Panel lateral -->
   <div class="sidebar" id="sidebar">
     <a href="#" onclick="mostrar('blockchain')">Blockchain</a>
-    <a href="#" onclick="mostrar('perspectivas')">Perspectivas económicas</a>
-    <a href="#" onclick="mostrar('documentos')">Documento de investigación</a>
+    <a href="#" onclick="mostrar('perspectivas')">Perspectivas Económicas</a>
+    <a href="#" onclick="mostrar('documentos')">Documento de la Investigación</a>
   </div>
 
   <!-- Contenido -->
@@ -469,6 +482,7 @@
 </div>
 
 <!-- Librería QR -->
+<!-- Librería QR -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
 <script>
@@ -479,10 +493,11 @@ function toggleSidebar() {
   sidebar.classList.toggle("active");
   content.classList.toggle("shifted");
 }
+
 // 🔹 Bloquear flechas y redirigirlas al scroll-area
 document.addEventListener("keydown", function(e) {
   const area = document.getElementById("scroll-area");
-  if (!area) return; // seguridad: si aún no existe, no hace nada
+  if (!area) return;
 
   if (e.key === "ArrowDown") {
     e.preventDefault();
@@ -492,126 +507,111 @@ document.addEventListener("keydown", function(e) {
     e.preventDefault();
     area.scrollBy(0, -50);
   }
-})
+});
+
+// 🔹 Función auxiliar para inicializar botón QR
+function initQR(idBtn, idArea, idDiv, url) {
+  const btn = document.getElementById(idBtn);
+  const area = document.getElementById(idArea);
+  const div = document.getElementById(idDiv);
+
+  // Generar QR
+  new QRCode(div, {
+    text: url,
+    width: 250,
+    height: 250
+  });
+
+  // Alternar visibilidad
+  btn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    area.style.display = area.style.display === "none" ? "block" : "none";
+  });
+
+  // Ocultar al hacer clic fuera
+  document.addEventListener("click", (e) => {
+    if (!area.contains(e.target) && e.target !== btn) {
+      area.style.display = "none";
+    }
+  });
+}
+
 function mostrar(seccion) {
-  // siempre mantenemos el título fijo y el área de scroll
   const cont = document.getElementById("contenido");
   cont.innerHTML = `<div class="scroll-area" id="scroll-area"></div>`;
+  const area = document.getElementById("scroll-area");
 
-  const area = document.getElementById("scroll-area"); // 🔹 aquí insertamos
-  
+  if (seccion === "blockchain") {
+    area.innerHTML += `
+<div class="recurso">
+  <!-- Previsualización a la izquierda -->
+  <div class="preview">
+    <iframe src="presentacion_blockchain.html"></iframe>
+  </div>
 
+  <!-- Columna derecha: título + botones -->
+  <div class="lateral">
+    <h3 class="titulo-doc">Presentación de Blockchain</h3>
+    <div class="cuadro">
+      <a href="presentacion_blockchain.html" download>
+        <button>DESCARGAR</button>
+      </a>
+    </div>
+  </div>
+</div>
+	`;
+  }
 
-	if (seccion === "blockchain") {
-	  area.innerHTML += `
-		<h3 class="titulo-doc">Presentación de Blockchain</h3>
-		<div class="recurso">
-		  <!-- Cuadro 1: Previsualización -->
-		  <div class="preview">
-			<iframe src="presentacion_blockchain.html" width="400" height="300"></iframe>
-		  </div>
+  if (seccion === "perspectivas") {
+    area.innerHTML += `
+    <div class="recurso">
+      <!-- Previsualización a la izquierda -->
+      <div class="preview">
+        <iframe src="presentacion_perspectivas.html"></iframe>
+      </div>
 
-		  <!-- Columna lateral con cuadros 2 y 3 -->
-		  <div class="lateral">
-			<!-- Cuadro 2: Botón -->
-			<div class="cuadro">
-			  <a href="presentacion_blockchain.html" download>
-				<button>Descargar HTML</button>
-			  </a>
-			</div>
+      <!-- Columna derecha: título + botones -->
+      <div class="lateral">
+        <h3 class="titulo-doc">Presentación de Perspectivas Económicas</h3>
+        <div class="cuadro">
+          <a href="presentacion_perspectivas.html" download>
+            <button>DESCARGAR</button>
+          </a>
+        </div>
+      </div>
+    </div>`;
+  }
 
-			<!-- Cuadro 3: QR -->
-			<div class="cuadro">
-			  <div id="qr-html1"></div>
-			</div>
-		  </div>
-		</div>
-		
-		<h3 class="titulo-doc">Presentación de Perspectivas Económicas</h3>
-		<div class="recurso">
-		  <!-- Cuadro 1: Previsualización -->
-		  <div class="preview">
-			<iframe src="presentacion_perspectivas.html" width="400" height="300"></iframe>
-		  </div>
+  if (seccion === "documentos") {
+    area.innerHTML += `
+    <div class="recurso">
+      <div class="preview">
+        <iframe src="analisis_blockchain_Latex.pdf"></iframe>
+      </div>
+      <div class="lateral">
+        <h3 class="titulo-doc">Análisis de las Implicaciones del Blockchain en la Políticia Económica Contemporánea (Latex)</h3>
+        <div class="cuadro">
+          <a href="analisis_blockchain_Latex.pdf" download>
+            <button>DESCARGAR</button>
+          </a>
+        </div>
+      </div>
+    </div>
 
-		  <!-- Columna lateral con cuadros 2 y 3 -->
-		  <div class="lateral">
-			<!-- Cuadro 2: Botón -->
-			<div class="cuadro">
-			  <a href="presentacion_perspectivas.html" download>
-				<button>Descargar HTML</button>
-			  </a>
-			</div>
-
-			<!-- Cuadro 3: QR -->
-			<div class="cuadro">
-			  <div id="qr-html2"></div>
-			</div>
-		  </div>
-		</div>
-		
-		<h3 class="titulo-doc">Análisis de las Implicaciones del Blockchain en la Políticia Económica Contemporánea (Latex)</h3>
-		<div class="recurso">
-		  <div class="preview">
-			<iframe src="analisis_blockchain_Latex.pdf" width="400" height="300"></iframe>
-		  </div>
-		  <div class="lateral">
-			<div class="cuadro">
-			  <a href="analisis_blockchain_Latex.pdf" download>
-				<button>Descargar PDF</button>
-			  </a>
-			</div>
-			<div class="cuadro">
-			  <div id="qr-doc1"></div>
-			</div>
-		  </div>
-		</div>
-
-
-		<h3 class="titulo-doc">Análisis de las Implicaciones del Blockchain en la Políticia Económica Contemporánea</h3>
-		<div class="recurso">
-		  <div class="preview">
-			<iframe src="analisis_blockchain.pdf" width="400" height="300"></iframe>
-		  </div>
-		  <div class="lateral">
-			<div class="cuadro">
-			  <a href="analisis_blockchain.pdf" download>
-				<button>Descargar PDF</button>
-			  </a>
-			</div>
-			<div class="cuadro">
-			  <div id="qr-doc2"></div>
-			</div>
-		  </div>
-		</div>`;
-
-	  // 🔹 Generar QR con tamaño personalizado
-	  new QRCode(document.getElementById("qr-html1"), {
-		text: "https://202003519jonatanbarillas-sudo.github.io/seminario2026/presentacion_blockchain.html",
-		width: 365,   // ancho del QR
-		height: 365   // alto del QR
-	  });
-
-	  new QRCode(document.getElementById("qr-html2"), {
-		text: "https://202003519jonatanbarillas-sudo.github.io/seminario2026/presentacion_perspectivas.html",
-		width: 365,
-		height: 365
-	  });
-	  
-	  // 🔹 Generar QR con tamaño personalizado
-	  new QRCode(document.getElementById("qr-doc1"), {
-		text: "https://202003519jonatanbarillas-sudo.github.io/seminario2026/analisis_blockchain_Latex.pdf",
-		width: 365,
-		height: 365
-	  });
-	  
-	  new QRCode(document.getElementById("qr-doc2"), {
-		text: "https://202003519jonatanbarillas-sudo.github.io/seminario2026/analisis_blockchain.pdf",
-		width: 365,
-		height: 365
-	  });
-	}
-
+    <div class="recurso">
+      <div class="preview">
+        <iframe src="analisis_blockchain.pdf"></iframe>
+      </div>
+      <div class="lateral">
+        <h3 class="titulo-doc">Análisis de las Implicaciones del Blockchain en la Políticia Económica Contemporánea</h3>
+        <div class="cuadro">
+          <a href="analisis_blockchain.pdf" download>
+            <button>DESCARGAR</button>
+          </a>
+        </div>
+      </div>
+    </div>`;
+  }
 }
 
 // 🔹 Llamada inicial para que cargue Blockchain al abrir la página
@@ -619,6 +619,7 @@ window.onload = function() {
   mostrar("blockchain");
 };
 </script>
+
 
 
 </body>

@@ -560,36 +560,53 @@ function mostrar(seccion) {
     </div>`;
   }
 
-  if (seccion === "documentos") {
-    area.innerHTML += `
-    <div class="recurso">
-      <div class="preview">
-        <iframe src="analisis_blockchain_Latex.html"></iframe>
-      </div>
-      <div class="lateral">
-        <h3 class="titulo-doc">Análisis de las Implicaciones del Blockchain en la Políticia Económica Contemporánea (Latex)</h3>
-        <div class="cuadro">
-          <a href="analisis_blockchain_Latex.pdf" download>
-            <button>DESCARGAR</button>
-          </a>
-        </div>
-      </div>
-    </div>
+	if (seccion === "documentos") {
+	  // Detectar si es móvil
+	  const esMovil = /Mobi|Android/i.test(navigator.userAgent);
 
-    <div class="recurso">
-      <div class="preview">
-        <iframe src="analisis_blockchain.html"></iframe>
-      </div>
-      <div class="lateral">
-        <h3 class="titulo-doc">Análisis de las Implicaciones del Blockchain en la Políticia Económica Contemporánea</h3>
-        <div class="cuadro">
-          <a href="analisis_blockchain.pdf" download>
-            <button>DESCARGAR</button>
-          </a>
-        </div>
-      </div>
-    </div>`;
-  }
+	  // URL directa al PDF (usa raw.githubusercontent.com si está en GitHub)
+	  const pdfLatex = "analisis_blockchain_Latex.pdf";
+	  const pdfNormal = "analisis_blockchain.pdf";
+
+	  // Si es móvil, usar Google Docs Viewer
+	  const srcLatex = esMovil
+		? `https://docs.google.com/viewer?url=${pdfLatex}&embedded=true`
+		: pdfLatex;
+
+	  const srcNormal = esMovil
+		? `https://docs.google.com/viewer?url=${pdfNormal}&embedded=true`
+		: pdfNormal;
+
+	  area.innerHTML += `
+		<div class="recurso">
+		  <div class="preview">
+			<iframe src="${srcLatex}"></iframe>
+		  </div>
+		  <div class="lateral">
+			<h3 class="titulo-doc">Análisis de las Implicaciones del Blockchain en la Política Económica Contemporánea (Latex)</h3>
+			<div class="cuadro">
+			  <a href="${pdfLatex}" download>
+				<button>DESCARGAR</button>
+			  </a>
+			</div>
+		  </div>
+		</div>
+
+		<div class="recurso">
+		  <div class="preview">
+			<iframe src="${srcNormal}"></iframe>
+		  </div>
+		  <div class="lateral">
+			<h3 class="titulo-doc">Análisis de las Implicaciones del Blockchain en la Política Económica Contemporánea</h3>
+			<div class="cuadro">
+			  <a href="${pdfNormal}" download>
+				<button>DESCARGAR</button>
+			  </a>
+			</div>
+		  </div>
+		</div>`;
+	}
+
 }
 
 // 🔹 Llamada inicial para que cargue Blockchain al abrir la página

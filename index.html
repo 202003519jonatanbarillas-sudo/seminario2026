@@ -284,138 +284,76 @@
 /* 📱 SOLO CELULAR */
 @media (max-width: 1000px) {
 
-  body {
-    overflow: auto; /* permitir scroll normal */
-  }
+body {  margin: 0;  font-family: Arial, sans-serif;  background: #f4f4f4;}
 
-  .scroll-area {
-    position: relative;
-    top: 0;
-    left: 0;
-    transform: none;
-    width: 100%;
-    height: auto;
-    border-radius: 0;
-    padding: 0px;
-	
-  }
-  .content{
-	  height: auto;   
-	  padding-top: 0px;	  
-	  overflow-y: auto;   /* scroll si se pasa */
-	}
+/* 🔹 CONTENEDOR SCROLL */
+.scroll-area {  position: fixed;  top: 65px;  left: 50%;  transform: translateX(-50%);  width: 100%;  height: calc(100vh - 275px);  overflow-y: auto;  background: #0b1a4a;  padding: 10px;  color: white;}
 
-	.topbar {
-	  background: orange;
-	  color: #0b1a4a;
-	  display: flex;
-	  align-items: center;
-	  padding: 0;
-	  position: relative;             /* 🔹 necesario para centrar el medio */
-	  width: 100%;
-	  z-index: 2000;
-	}
+/* 🔹 TOPBAR */
+.topbar {  background: orange;  color: #0b1a4a;  display: flex;  align-items: center;  justify-content: space-between;  padding: 0;  position: fixed;  top: 0;  width: 100%;  z-index: 2000;}
 
-	.center-area {
-	  position: absolute;             /* 🔹 truco para centrar */
-	  left: 50%;
-	  display: flex;
-	  align-items: center;
-	  gap: 0px;
-	}
+.left-area .logo { visibility: hidden;}
 
-	.center-area h1 {
-	  font-size: 25px;
-	}
-
-	.right-area {
-	  display: flex;
-	  text-align: center;
-	  justify-content: left-end;
-	}
-
-	.right-area h1 {
-	  font-size: 25px;
-	}
-
-
-
-  /* 🔹 CAMBIO CLAVE: vertical */
-  .recurso {
-    flex-direction: column;
-    gap: 25px;
-	align-items: center; /* 🔥 centra horizontal */
-	
-  }
-
-  .recurso .preview {
-    width: 92%;
-    height: 95vh;
-	min-height: 300px;
-	max-height: 600px;
-    padding: 5px;
-	
-  }
-
-  .recurso .lateral {
-    width: 92%;
-    height: auto;
-  }
-
-  .recurso .lateral .cuadro {
-    width: 92%;
-    height: auto;
-    padding: 15px;
-  }
-
-  iframe {
-    border-radius: 10px;
-	width: 100%;
-    height: 100vh;
-	min-height: 300px;
-	max-height: 600px;
-  }
-
-  button {
-    font-size: 25px;
-    width: 100%;
-  }
-  	/* 🔹 QR (canvas o imagen) */
-	#qr-html1 canvas, #qr-html2 canvas,
-	#qr-doc1 canvas, #qr-doc2 canvas,
-	#qr-html1 img, #qr-html2 img,
-	#qr-doc1 img, #qr-doc2 img {
-
-	  width: 95%;        /* 🔥 tamaño principal */
-	  max-width: 1000px;  /* límite en celulares grandes */
-	  max-height: 1000px;
-      /* mantiene proporción */
-	}
-
-  .titulo-seccion {
-    font-size: 30px;
-  }
-
-  .titulo-doc {
-    font-size: 18px;
-    text-align: center;
-  }
-
-  .sidebar {
-    width: 100%;      /* 🔥 ancho tipo app */
-    max-width: 300px; /* límite para que no crezca demasiado */
-    left: -100%;     /* oculto completamente */
-  }
-
-  .sidebar.active {
-    left: 0;
-  }
-
+.menu-btn {
+  font-size: 25px;   /* 🔹 agranda el símbolo ☰ */
 }
 
-  .content.shifted {
-    margin-left: 20;
-  }
+
+.center-area h1{font-size: 20px; width: 100%;}
+
+
+.right-area h1{background: orange; font-size: 10px; visibility: hidden;}
+
+
+/* 🔹 CONTENIDO */
+/* CONTENEDOR */
+.recurso {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0px;
+}
+
+/* IFRAME */
+.recurso .preview {
+  width: 100%;
+  max-width: 375px;
+  	  margin-bottom: 0px;
+  height: 60vh;
+}
+
+.recurso iframe {
+  width: 100%;
+  height: 100%;
+}
+
+/* TÍTULO */
+.recurso .lateral h3.titulo-doc {
+	  font-size: 25px; 
+	  margin-right: 0px;  /* 🔹 aquí cambias el tamaño */
+	  margin-bottom: 20px;
+	  font-weight: bold;
+	  width: 300px;
+	  color: #ffd700;
+	  text-align: center;
+	  flex: 1;                
+	  display: flex;
+	  flex-direction: column; /* apila verticalmente */
+	  gap: 0px;
+	  align-items: center;    /* centra horizontalmente */
+}
+
+/* BOTÓN */
+.recurso .lateral .cuadro {
+  display: flex;
+ margin-right: 0px;  /* 🔹 aquí cambias el tamaño */
+  justify-content: center;
+}
+
+.recurso button {
+  font-size: 18px;
+  padding: 10px 20px;
+}
 
 }
 
